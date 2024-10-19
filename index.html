@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TodoFlow - Управляйте своими задачами легко и эффективно.">
+  <meta name="keywords" content="задачи, список задач, планирование, to-do list">
   <title>TodoFlow - Ваш список задач</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,9 +17,16 @@
   <main>
     <section class="add-task">
       <!-- Форма добавления новой задачи -->
+      <form id="task-form" aria-label="Форма добавления новой задачи">
+        <input type="text" id="task-input" placeholder="Введите задачу..." required aria-label="Введите новую задачу">
+        <button type="submit" aria-label="Добавить задачу">Добавить</button>
+      </form>
     </section>
     <section class="tasks">
       <!-- Список задач -->
+      <ul id="task-list" aria-label="Список задач">
+        <!-- Здесь будут появляться задачи -->
+      </ul>
     </section>
   </main>
   <footer>
