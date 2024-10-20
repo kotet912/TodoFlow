@@ -4,7 +4,7 @@ const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 
 // Предотвращаем перезагрузку страницы при отправке формы
-taskForm.addEventListener('submit', function (event) {
+taskForm.addEventListener('submit', (event) => {
   event.preventDefault();
   addTask();
 });
@@ -24,7 +24,7 @@ function addTask () {
     deleteBtn.textContent = '✖';
 
     // Добавляем обработчик события для кнопки удаления
-    deleteBtn.addEventListener('click', function () {
+    deleteBtn.addEventListener('click', () => {
       taskList.removeChild(li);
     });
 
