@@ -11,27 +11,37 @@
 </head>
 
 <body>
-  <header>
-    <h1>TodoFlow</h1>
-  </header>
-  <main>
-    <section class="add-task">
-      <!-- Форма добавления новой задачи -->
-      <form id="task-form" aria-label="Форма добавления новой задачи">
-        <input type="text" id="task-input" placeholder="Введите задачу..." required aria-label="Введите новую задачу">
-        <button type="submit" aria-label="Добавить задачу">Добавить</button>
-      </form>
-    </section>
-    <section class="tasks">
-      <!-- Список задач -->
-      <ul id="task-list" aria-label="Список задач">
-        <!-- Здесь будут появляться задачи -->
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 TodoFlow</p>
-  </footer>
+  <div id="app">
+    <header>
+      <h1>TodoFlow</h1>
+    </header>
+    <main>
+      <section class="add-task">
+        <!-- Форма добавления новой задачи -->
+        <form @submit.prevent="addTask" id="task-form" aria-label="Форма добавления новой задачи">
+          <input type="text" id="task-input" v-model="newTask" placeholder="Введите задачу..." required
+            aria-label="Введите новую задачу">
+          <button type="submit" aria-label="Добавить задачу">Добавить</button>
+        </form>
+      </section>
+      <section class="tasks">
+        <!-- Список задач -->
+        <ul id="task-list" aria-label="Список задач">
+          <!-- Здесь будут появляться задачи -->
+          <li v-for="task in tasks" :key="task.id">
+            <span :class="{ completed: task.completed }" @click="toggleComplete(task)">
+              {{ task.title }}
+            </span>
+            <button class="delete-task" @click="deleteTask(task)">✖</button>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 TodoFlow</p>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <script src="js/app.js"></script>
 </body>
 
