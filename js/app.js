@@ -86,3 +86,14 @@ async function createTask (task) {
     console.error('Ошибка при создании задачи:', error);
   }
 }
+
+async function deleteTask (id, element) {
+  try {
+    await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      method: 'DELETE'
+    });
+    taskList.removeChild(element);
+  } catch (error) {
+    console.error('Ошибка при удалении задачи:', error);
+  }
+}
