@@ -37,13 +37,21 @@ function renderTask (task) {
 // Функция для загрузки задач с сервера
 async function fetchTasks () {
   try {
+    // Показываем индикатор загрузки
+    taskList.innerHTML = '<p>Загрузка задач...</p>';
+
     const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
     const tasks = await response.json();
+
+    // Очищаем список и отображаем задачи
+    taskList.innerHTML = '';
     tasks.forEach(task => renderTask(task));
   } catch (error) {
+    taskList.innerHTML = '<p>Ошибка при загрузке задач.</p>';
     console.error('Ошибка при загрузке задач:', error);
   }
 }
+
 
 // Вызов функции загрузки при загрузке страницы
 document.addEventListener('DOMContentLoaded', fetchTasks);
