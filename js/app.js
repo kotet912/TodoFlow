@@ -28,6 +28,11 @@ function addTask () {
       taskList.removeChild(li);
     });
 
+    // Помечать задачи как выполненные при клике
+    span.addEventListener('click', () => {
+      span.classList.toggle('completed');
+    });
+
     // Собираем элементы
     li.appendChild(span);
     li.appendChild(deleteBtn);
