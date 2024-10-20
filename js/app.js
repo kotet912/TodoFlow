@@ -3,42 +3,63 @@ const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 
-// Предотвращаем перезагрузку страницы при отправке формы
-taskForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  addTask();
-});
+// Функция для отображения задачи в списке
+function renderTask (task) {
+  const li = document.createElement('li');
+  const span = document.createElement('span');
+  span.className = 'task-text';
+  span.textContent = task.title;
 
+  if (task.completed) {
+    span.classList.add('completed');
+  }
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'delete-task';
+  deleteBtn.textContent = '✖';
+
+  // Добавляем обработчик удаления
+  deleteBtn.addEventListener('click', () => {
+    deleteTask(task.id, li);
+  });
+
+  // Обработчик для отметки задачи как выполненной
+  span.addEventListener('click', () => {
+    span.classList.toggle('completed');
+    updateTaskStatus(task.id, span.classList.contains('completed'));
+  });
+
+  li.appendChild(span);
+  li.appendChild(deleteBtn);
+  taskList.appendChild(li);
+}
+
+// Функция для загрузки задач с сервера
+async function fetchTasks () {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
+    const tasks = await response.json();
+    tasks.forEach(task => renderTask(task));
+  } catch (error) {
+    console.error('Ошибка при загрузке задач:', error);
+  }
+}
+
+// Вызов функции загрузки при загрузке страницы
+document.addEventListener('DOMContentLoaded', fetchTasks);
+
+// Функция добавления задачи
 function addTask () {
   const taskText = taskInput.value.trim();
 
   if (taskText !== '') {
-    // Создаем элементы для новой задачи
-    const li = document.createElement('li');
-    const span = document.createElement('span');
-    span.className = 'task-text';
-    span.textContent = taskText;
+    const newTask = {
+      title: taskText,
+      completed: false
+    };
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'delete-task';
-    deleteBtn.textContent = '✖';
-
-    // Добавляем обработчик события для кнопки удаления
-    deleteBtn.addEventListener('click', () => {
-      taskList.removeChild(li);
-    });
-
-    // Помечать задачи как выполненные при клике
-    span.addEventListener('click', () => {
-      span.classList.toggle('completed');
-    });
-
-    // Собираем элементы
-    li.appendChild(span);
-    li.appendChild(deleteBtn);
-    taskList.appendChild(li);
-
-    // Очищаем поле ввода
+    createTask(newTask);
     taskInput.value = '';
   }
 }
+
