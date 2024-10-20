@@ -97,3 +97,17 @@ async function deleteTask (id, element) {
     console.error('Ошибка при удалении задачи:', error);
   }
 }
+
+async function updateTaskStatus (id, completed) {
+  try {
+    await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ completed }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  } catch (error) {
+    console.error('Ошибка при обновлении задачи:', error);
+  }
+}
