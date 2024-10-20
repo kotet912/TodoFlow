@@ -63,3 +63,26 @@ function addTask () {
   }
 }
 
+// Обработчик отправки формы
+taskForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  addTask();
+});
+
+async function createTask (task) {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
+      method: 'POST',
+      body: JSON.stringify(task),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const newTask = await response.json();
+    newTask.id = Date.now(); // Генерируем временный ID
+    renderTask(newTask);
+  } catch (error) {
+    console.error('Ошибка при создании задачи:', error);
+  }
+}
